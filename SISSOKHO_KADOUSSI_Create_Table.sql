@@ -1,4 +1,4 @@
-SPOOL "C:\temp\pise\SISSOKHO_KADOUSSI_Create_Schema.log"
+SPOOL "C:\temp\pise\SISSOKHO_KADOUSSI_Create_Table.log"
 
 PROMPT '>> Nettoyage ecran'
 host cls
@@ -92,7 +92,7 @@ CREATE TABLE  CLIENT
   tel_client    VARCHAR2(15),
   mail_client   VARCHAR2(100),
   id_add        NUMBER	NOT NULL,
-  libelle_civilite VARCHAR2(15)
+  code_civilite NUMBER NOT NULL
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table DEMANDE : Stocke les informations sur les demandes'
@@ -107,7 +107,8 @@ CREATE TABLE DEMANDE
     motif_change_statut VARCHAR2(200),
     code_intervenant    NUMBER	NOT NULL,
     code_produit    NUMBER	NOT NULL,
-    libelle_demande VARCHAR2(50)
+    code_demande VARCHAR2(6) NOT NULL,
+    num_client NUMBER NOT NULL
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table INTERACTION : Stocke les interactions entre BNP Paribas Cardif et les clients'
@@ -118,7 +119,7 @@ CREATE TABLE INTERACTION
     date_inter    DATE NOT NULL,
     statut_inter  VARCHAR2(50),
     num_client 	NUMBER	NOT NULL,
-    libelle_interaction  VARCHAR2(50)
+    code_interaction  NUMBER NOT NULL
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table DECISION : Stocke les décisions prises pour une demande'
@@ -130,8 +131,8 @@ CREATE TABLE DECISION
     statut_deci  VARCHAR2(50),
     indic_conf  VARCHAR2(20),
     deci_libelle    VARCHAR2(20),
-    num_demande     NUMBER	NOT NULL,
-    type_decision VARCHAR2(50)
+    num_demande      VARCHAR2(50) NOT NULL,
+   code_decision NUMBER NOT NULL
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table EVENEMENT : Stocke les événements survenus pendant le cycle de vie d’une demande'
@@ -140,16 +141,16 @@ CREATE TABLE EVENEMENT
 (
     id_event    NUMBER	NOT NULL,
     date_event DATE NOT NULL,
-    com_event TEXT,
-    num_demande     NUMBER	NOT NULL,
-    libelle_event   VARCHAR2(50)
+    com_event VARCHAR2(500),
+    num_demande      VARCHAR2(50) NOT NULL,
+    code_event   NUMBER NOT NULL
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table EMETTRE : Associe les émetteurs aux demandes qu’ils ont émis'
 CREATE TABLE EMETTRE
 (
     code_emetteur       NUMBER	NOT NULL,
-    num_demande     NUMBER	NOT NULL
+    num_demande     VARCHAR2(50) NOT NULL
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table CHANGEMENT_STATUT : Historise les changements de statut d’une demande'
@@ -159,8 +160,8 @@ CREATE TABLE CHANGEMENT_STATUT
     id_change   NUMBER	NOT NULL,
     date_debut_change    DATE NOT NULL,
     date_fin_change    DATE NOT NULL,
-    num_demande     NUMBER	NOT NULL,
-    libelle_statut VARCHAR2(50)
+    num_demande      VARCHAR2(50) NOT NULL,
+    code_statut NUMBER NOT NULL
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '------ FIN DE LA CREATION DES TABLES ------'
@@ -189,21 +190,21 @@ ALTER TABLE CHANGEMENT_STATUT ADD CONSTRAINT changement_statut_pk PRIMARY KEY (i
 PROMPT '>> CREATION DES CONTRAINTES FK'
 
 ALTER TABLE CLIENT ADD CONSTRAINT client_adresse_fk FOREIGN KEY (id_add) REFERENCES ADRESSE(id_add);
-ALTER TABLE CLIENT ADD CONSTRAINT client_civilite_fk FOREIGN KEY (libelle_civilite) REFERENCES REF_CIVILITE(libelle_civilite);
+ALTER TABLE CLIENT ADD CONSTRAINT client_civilite_fk FOREIGN KEY (code_civilite) REFERENCES REF_CIVILITE(code_civilite);
 ALTER TABLE DEMANDE ADD CONSTRAINT demande_producteur_fk FOREIGN KEY (code_intervenant) REFERENCES PRODUCTEUR(code_intervenant);
-ALTER TABLE DEMANDE ADD CONSTRAINT demande_type_dem_fk FOREIGN KEY (libelle_demande) REFERENCES REF_TYP_DEM(libelle_demande);
+ALTER TABLE DEMANDE ADD CONSTRAINT demande_type_dem_fk FOREIGN KEY (code_demande) REFERENCES REF_TYP_DEM(code_demande);
 ALTER TABLE DEMANDE ADD CONSTRAINT demande_produit_fk FOREIGN KEY (code_produit) REFERENCES PRODUIT(code_produit);
 ALTER TABLE DEMANDE ADD CONSTRAINT demande_client_fk FOREIGN KEY (num_client) REFERENCES CLIENT(num_client);
 ALTER TABLE INTERACTION ADD CONSTRAINT interaction_client_fk FOREIGN KEY (num_client) REFERENCES CLIENT(num_client);
-ALTER TABLE INTERACTION ADD CONSTRAINT interaction_type_int_fk FOREIGN KEY (libelle_interaction) REFERENCES REF_TYP_INT(libelle_interaction);
+ALTER TABLE INTERACTION ADD CONSTRAINT interaction_type_int_fk FOREIGN KEY (code_interaction) REFERENCES REF_TYP_INT(code_interaction);
 ALTER TABLE DECISION ADD CONSTRAINT decision_demande_fk FOREIGN KEY (num_demande) REFERENCES DEMANDE(num_demande);
-ALTER TABLE DECISION ADD CONSTRAINT decision_type_dec_fk FOREIGN KEY (type_decision) REFERENCES REF_TYP_DEC(type_decision);
+ALTER TABLE DECISION ADD CONSTRAINT decision_type_dec_fk FOREIGN KEY (code_decision) REFERENCES REF_TYP_DEC(code_decision);
 ALTER TABLE EVENEMENT ADD CONSTRAINT evenement_demande_fk FOREIGN KEY (num_demande) REFERENCES DEMANDE(num_demande);
-ALTER TABLE EVENEMENT ADD CONSTRAINT evenement_type_event_fk FOREIGN KEY (libelle_event) REFERENCES REF_TYP_EVENT(libelle_event);
+ALTER TABLE EVENEMENT ADD CONSTRAINT evenement_type_event_fk FOREIGN KEY (code_event) REFERENCES REF_TYP_EVENT(code_event);
 ALTER TABLE EMETTRE ADD CONSTRAINT emettre_emetteur_fk FOREIGN KEY (code_emetteur) REFERENCES EMETTEUR(code_emetteur);
 ALTER TABLE EMETTRE ADD CONSTRAINT emettre_demande_fk FOREIGN KEY (num_demande) REFERENCES DEMANDE(num_demande);
 ALTER TABLE CHANGEMENT_STATUT ADD CONSTRAINT change_statut_demande_fk FOREIGN KEY (num_demande) REFERENCES DEMANDE(num_demande);
-ALTER TABLE CHANGEMENT_STATUT ADD CONSTRAINT change_statut_ref_statut_fk FOREIGN KEY (libelle_statut) REFERENCES REF_STATUT(libelle_statut);
+ALTER TABLE CHANGEMENT_STATUT ADD CONSTRAINT change_statut_ref_statut_fk FOREIGN KEY (code_statut) REFERENCES REF_STATUT(code_statut);
 
 PROMPT '------ SCRIPT TERMINE ------'
 

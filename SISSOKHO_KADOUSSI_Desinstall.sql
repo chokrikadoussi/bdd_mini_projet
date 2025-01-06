@@ -1,4 +1,4 @@
-SPOOL "C:\temp\pise\SISSOKHO_KADOUSSI_Drop_Tables.log"
+SPOOL "C:\temp\pise\SISSOKHO_KADOUSSI_Desinstall.log"
 
 PROMPT '>> Nettoyage ecran'
 host cls
