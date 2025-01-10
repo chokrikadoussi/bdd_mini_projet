@@ -1,4 +1,4 @@
-SPOOL "C:\temp\pise\SISSOKHO_KADOUSSI_Create_Table.log"
+SPOOL "C:\temp\log\SISSOKHO_KADOUSSI_Create_Table.log"
 
 PROMPT '>> Nettoyage ecran'
 host cls

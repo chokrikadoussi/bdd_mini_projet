@@ -1,13 +1,15 @@
-SPOOL "C:\temp\pise\SISSOKHO_KADOUSSI_Create_Schema.log"
+SPOOL "C:\temp\log\SISSOKHO_KADOUSSI_Create_Schema.log"
 
 PROMPT '>> Nettoyage ecran'
 host cls
 
 PROMPT '>> Connexion compte System en tant que DBA'
 connect System/Pise2024
-
+/*
 PROMPT '>> Suppression du compte asi_cka existant'
 DROP USER asi_cka CASCADE ;
+*/
+
 
 PROMPT '>> Creation Schema asi_cka'
 CREATE USER asi_cka IDENTIFIED BY asi_cka ;
