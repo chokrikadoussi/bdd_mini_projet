@@ -6,7 +6,7 @@ host cls
 PROMPT '>> SUPPRESSION DU MODELE PHYSIQUE DE DONNEES'
 
 
-PROMPT '>> Connection en tant que asi_cka'
+PROMPT '>> Connection en tant que asi_cka' 
 connect asi_cka/asi_cka
 
 
