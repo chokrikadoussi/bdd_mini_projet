@@ -4,12 +4,17 @@ PROMPT '>> Nettoyage ecran'
 host cls
 
 PROMPT '>> Connexion compte System en tant que DBA'
-connect System/Pise2024
+connect System/pise2024
+
+
 /*
 PROMPT '>> Suppression du compte asi_cka existant'
 DROP USER asi_cka CASCADE ;
-*/
 
+PROMPT '>> Suppression des tbs de asi_cka existant'
+DROP TABLESPACE asi_cka_tbs_table INCLUDING CONTENTS AND DATAFILES ;
+DROP TABLESPACE asi_cka_tbs_index INCLUDING CONTENTS AND DATAFILES ;
+*/
 
 PROMPT '>> Creation Schema asi_cka'
 CREATE USER asi_cka IDENTIFIED BY asi_cka ;

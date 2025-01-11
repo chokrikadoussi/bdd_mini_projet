@@ -77,6 +77,17 @@ DROP TABLE REF_TYP_EVENT PURGE;
 
 PROMPT '>> Suppression terminée'
 
+PROMPT '>> Connection en tant que system' 
+
+CONNECT System/pise2024 
+
+PROMPT '>> Suppression du compte asi_cka existant'
+DROP USER asi_cka CASCADE ;
+
+PROMPT '>> Suppression des tablespaces'
+DROP TABLESPACE asi_cka_tbs_table INCLUDING CONTENTS AND DATAFILES ;
+DROP TABLESPACE asi_cka_tbs_index INCLUDING CONTENTS AND DATAFILES ;
+
 DISCONNECT
 
 SPOOL OFF
