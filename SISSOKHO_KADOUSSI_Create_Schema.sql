@@ -4,7 +4,8 @@ PROMPT '>> Nettoyage ecran'
 host cls
 
 PROMPT '>> Connexion compte System en tant que DBA'
-connect System/Pise2024
+connect System
+
 /*
 PROMPT '>> Suppression du compte asi_cka existant'
 DROP USER asi_cka CASCADE ;
