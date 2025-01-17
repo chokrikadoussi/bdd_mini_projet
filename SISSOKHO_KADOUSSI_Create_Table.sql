@@ -83,7 +83,7 @@ CREATE TABLE PRODUIT
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table CLIENT : Stocke les informations des clients'
--- rajouter : fk libelle client reference à REF_CIVILITE
+
 CREATE TABLE  CLIENT
 (
   num_client 	NUMBER	NOT NULL,
@@ -96,7 +96,7 @@ CREATE TABLE  CLIENT
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table DEMANDE : Stocke les informations sur les demandes'
--- rajouter : fk libelle demande reference à REF_TYP_DEM
+
 CREATE TABLE DEMANDE 
 (
     num_demande     VARCHAR2(50) NOT NULL,
@@ -112,7 +112,7 @@ CREATE TABLE DEMANDE
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table INTERACTION : Stocke les interactions entre BNP Paribas Cardif et les clients'
---rajouter : fk libelle_interaction reference REF_TYP_INT
+
 CREATE TABLE INTERACTION 
 (
     id_inter      NUMBER NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE INTERACTION
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table DECISION : Stocke les décisions prises pour une demande'
--- rajouter une fk : type_decision refeence REF_TYPE_DEC
+
 CREATE TABLE DECISION
 (
     num_deci 	NUMBER	NOT NULL,
@@ -136,7 +136,7 @@ CREATE TABLE DECISION
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table EVENEMENT : Stocke les événements survenus pendant le cycle de vie d’une demande'
--- rajouter une fk : libelle_event refeece REF_TYP_EVENT
+
 CREATE TABLE EVENEMENT
 (
     id_event    NUMBER	NOT NULL,
@@ -154,7 +154,7 @@ CREATE TABLE EMETTRE
 ) TABLESPACE asi_cka_tbs_table;
 
 PROMPT '>> Table CHANGEMENT_STATUT : Historise les changements de statut d’une demande'
--- rajouter une fk : libelle_statut
+
 CREATE TABLE CHANGEMENT_STATUT 
 (
     id_change   NUMBER	NOT NULL,
@@ -187,19 +187,18 @@ ALTER TABLE EVENEMENT ADD CONSTRAINT evenement_pk PRIMARY KEY (id_event) USING I
 ALTER TABLE EMETTRE ADD CONSTRAINT emettre_pk PRIMARY KEY (code_emetteur, num_demande) USING INDEX TABLESPACE asi_cka_tbs_index;
 ALTER TABLE CHANGEMENT_STATUT ADD CONSTRAINT changement_statut_pk PRIMARY KEY (id_change) USING INDEX TABLESPACE asi_cka_tbs_index;
 
-/*Une décision est caractérisée par un numéro de décision de type numérique auto incrément*/
+ 
 
 PROMPT '>> CREATION DE LA SEQUENCE POUR DECISION'
 CREATE SEQUENCE num_deci
 START WITH 1 INCREMENT BY 1 MINVALUE 1 MAXVALUE 999999999 ;
 
-<<<<<<< HEAD
 
-=======
+
 PROMPT '>> CREATION DE LA SEQUENCE POUR EVENEMENT'
 CREATE SEQUENCE id_event
 START WITH 1 INCREMENT BY 1 MINVALUE 1 MAXVALUE 999999999 ; 
->>>>>>> a4411b36c6cb64a6857862861ea1c95f5af1a9af
+
 
 
 PROMPT '>> CREATION DES CONTRAINTES FK'
