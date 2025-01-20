@@ -1,4 +1,4 @@
-SPOOL "C:\temp\log\SISSOKHO_KADOUSSI_Create_Schema.log"
+SPOOL "log\SISSOKHO_KADOUSSI_Create_Schema.log"
 
 PROMPT '>> Nettoyage ecran'
 host cls
